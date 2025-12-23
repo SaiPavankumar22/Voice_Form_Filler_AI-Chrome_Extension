@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 350px;
+      padding: 20px;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 400px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      margin: 0;
+      opacity: 0.9;
+      font-size: 12px;
+    }
+    
+    .status {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .status-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+    }
+    
+    .status-text {
+      font-size: 13px;
+      opacity: 0.95;
+    }
+    
+    .progress {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .progress-bar {
+      background: rgba(255, 255, 255, 0.2);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    
+    .progress-fill {
+      background: #4CAF50;
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-primary {
+      background: rgba(76, 175, 80, 0.8);
+      border-color: rgba(76, 175, 80, 0.3);
+    }
+    
+    .btn-primary:hover {
+      background: rgba(76, 175, 80, 0.9);
+    }
+    
+    .btn-stop {
+      background: rgba(244, 67, 54, 0.8);
+      border-color: rgba(244, 67, 54, 0.3);
+    }
+    
+    .btn-stop:hover {
+      background: rgba(244, 67, 54, 0.9);
+    }
+    
+    .field-list {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    
+    .field-item {
+      font-size: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .field-item:last-child {
+      border-bottom: none;
+    }
+    
+    .error {
+      background: rgba(244, 67, 54, 0.2);
+      border: 1px solid rgba(244, 67, 54, 0.3);
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    
+    .success {
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .mic-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #f44336;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .mic-indicator.recording {
+      background: #4CAF50;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    .settings {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .settings-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+    
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .setting-label {
+      font-size: 12px;
+    }
+    
+    .setting-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      width: 100px;
+    }
+    
+    .setting-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎤 Voice Form Filler</h1>
+    <p>AI-powered conversational form completion</p>
+  </div>
+  
+  <div class="status">
+    <div class="status-title">Status</div>
+    <div class="status-text" id="statusText">Ready to process webpage</div>
+  </div>
+  
+  <div class="progress hidden" id="progressContainer">
+    <div class="status-title">Progress</div>
+    <div class="status-text" id="progressText">0 of 0 fields completed</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+  
+  <div class="field-list hidden" id="fieldList">
+    <div class="status-title">Detected Fields</div>
+    <div id="fieldItems"></div>
+  </div>
+  
+  <div class="error hidden" id="errorMessage"></div>
+  <div class="success hidden" id="successMessage"></div>
+  
+  <div class="controls">
+    <button class="btn btn-primary" id="processBtn">🔍 Process Webpage</button>
+    <button class="btn btn-stop hidden" id="stopBtn">⏹️ Stop Process</button>
+    <button class="btn" id="clearBtn">🗑️ Clear Data</button>
+  </div>
+  
+  <div class="settings">
+    <div class="settings-title">Backend Configuration</div>
+    <div class="setting-item">
+      <span class="setting-label">API URL:</span>
+      <input type="text" class="setting-input" id="apiUrl" placeholder="http://localhost:8000" value="http://localhost:8000">
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
